@@ -25,11 +25,11 @@ jobs:
 
     - name: Build Docker images with docker-compose
       run: |
-        # Construire les images Docker
-        docker-compose -f docker-compose.yml build
+        # Construire les images Docker en utilisant le chemin correct pour le fichier docker-compose.yml
+        docker-compose -f hands_on_microservices/docker-compose.yml build
 
     - name: Install dependencies in the containers
       run: |
         # Installer les dépendances dans le container via Docker
-        docker-compose run service_a pip install -r /app/requirements.txt
-        docker-compose run service_b pip install -r /app/requirements.txt
+        docker-compose -f hands_on_microservices/docker-compose.yml run service_a pip install -r /app/requirements.txt
+        docker-compose -f hands_on_microservices/docker-compose.yml run service_b pip install -r /app/requirements.txt
