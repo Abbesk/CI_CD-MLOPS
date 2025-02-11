@@ -16,13 +16,7 @@ jobs:
     - name: Set up Docker
       uses: docker/setup-buildx-action@v2  
     - name: Build Docker images with docker-compose
-      run: |
-        # Installer Docker si nécessaire
-        sudo apt-get install -y docker.io
-
-        # Installer docker-compose
-        sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
+      run: 
         
         # Construire les images Docker
         docker-compose -f docker-compose.yml build
