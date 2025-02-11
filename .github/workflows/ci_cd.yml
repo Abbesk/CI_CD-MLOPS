@@ -31,5 +31,5 @@ jobs:
     - name: Install dependencies in the containers
       run: |
         # Installer les dépendances dans le container via Docker
-        docker-compose -f hands_on_microservices/docker-compose.yml run service_a pip install -r /app/requirements.txt
-        docker-compose -f hands_on_microservices/docker-compose.yml run service_b pip install -r /app/requirements.txt
+        docker-compose -f hands_on_microservices/docker-compose.yml run service_a pip install -r requirements.txt
+        docker-compose -f hands_on_microservices/docker-compose.yml run service_b pip install -r requirements.txt
