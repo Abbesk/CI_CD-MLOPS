@@ -16,6 +16,7 @@ services:
       context: ./service_b
     volumes:
       - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
+      - ../requirements.txt:/requirements.txt  # Montage du fichier
     depends_on:
       - db
     restart: always
@@ -25,6 +26,7 @@ services:
       context: ./service_a
     volumes:
       - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
+      - ../requirements.txt:/requirements.txt  # Montage du fichier
     ports:
       - "8000:8000"
     depends_on:
