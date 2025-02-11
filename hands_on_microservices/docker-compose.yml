@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:15
@@ -15,8 +17,7 @@ services:
     build:
       context: ./service_b
     volumes:
-      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
-      - ../requirements.txt:/requirements.txt  # Montage du fichier
+      - /tmp:/tmp
     depends_on:
       - db
     restart: always
@@ -25,13 +26,32 @@ services:
     build:
       context: ./service_a
     volumes:
-      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
-      - ../requirements.txt:/requirements.txt  # Montage du fichier
+      - /tmp:/tmp
     ports:
       - "8000:8000"
     depends_on:
       - service_b
     restart: always
+
+  write_api:
+    build:
+      context: ../databaseservices/write_api
+    depends_on:
+      - db
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgres://user:password@db/mydatabase
+
+  read_api:
+    build:
+      context: ../databaseservices/read_api
+    depends_on:
+      - db
+    ports:
+      - "8002:8002"
+    environment:
+      - DATABASE_URL=postgres://user:password@db/mydatabase
 
 volumes:
   postgres_data:
