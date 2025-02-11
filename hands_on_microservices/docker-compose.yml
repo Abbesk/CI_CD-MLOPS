@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  service_b:
+    build:
+      context: ./service_b
+    volumes:
+      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
+    depends_on:
+      - db
+    restart: always
+
+  service_a:
+    build:
+      context: ./service_a
+    volumes:
+      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
+    ports:
+      - "8000:8000"
+    depends_on:
+      - service_b
+    restart: always
+
+volumes:
+  postgres_data:
